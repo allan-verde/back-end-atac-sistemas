@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 import { DataSource } from 'typeorm'
+import { Tool } from './models/tool.model'
 
 
 dotenv.config()
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
     password: process.env.PASSWORD,
     port: 5432,
     database: process.env.DATABASE,
-    entities: [],
+    entities: [Tool],
     logging: true,
     synchronize: true
 })
