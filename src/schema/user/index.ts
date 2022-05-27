@@ -1,3 +1,8 @@
 import loginUserSchema from './loginUser.schema'
+import { createUserSchema, serializedCreateUserSchema } from './createUser.schema'
 
-export { loginUserSchema }
+export {
+  createUserSchema,
+  loginUserSchema,
+  serializedCreateUserSchema
+}

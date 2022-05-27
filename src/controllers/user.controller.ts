@@ -7,6 +7,12 @@ class UserController {
 
     return res.status(status).json(message)
   }
+
+  create = async (req: Request, res: Response) => {
+    const user = await userService.create(req)
+
+    return res.status(201).json(user)
+  }
 }
 
 export default new UserController()
