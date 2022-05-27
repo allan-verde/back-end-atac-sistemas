@@ -1,21 +1,20 @@
-import dotenv from 'dotenv'
-import 'reflect-metadata'
-import app from './app'
-import { AppDataSource } from './db'
+import { AppDataSource } from "./data-source"
+import { User } from "./entity/User"
 
+AppDataSource.initialize().then(async () => {
 
-dotenv.config()
+    console.log("Inserting a new user into the database...")
+    const user = new User()
+    user.firstName = "Timber"
+    user.lastName = "Saw"
+    user.age = 25
+    await AppDataSource.manager.save(user)
+    console.log("Saved a new user with id: " + user.id)
 
-const port = process.env.PORT || 3333
+    console.log("Loading users from the database...")
+    const users = await AppDataSource.manager.find(User)
+    console.log("Loaded users: ", users)
 
-async function main() {
-    try {
-        await AppDataSource.initialize()
-        console.log('Database conected')
-        app.listen(port, () => console.log('Server is runnig'))
-    } catch (error) {
-        console.log(error)
-    }
-}
+    console.log("Here you can setup and run express / fastify / any other framework.")
 
-main()
+}).catch(error => console.log(error))
