@@ -13,7 +13,7 @@ toolRouter.post(
 )
 
 toolRouter.get(
-  '/:userId',
+  '',
   validateToken,
   toolController.getAllBy
 )

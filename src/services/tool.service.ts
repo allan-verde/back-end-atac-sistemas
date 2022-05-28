@@ -19,22 +19,30 @@ class ToolService {
     return serializeToolUtils(tool)
   }
 
-  getAllBy = async ({ params }: Request) => {
-    if (!validator.isUUID(params.userId)) {
-      throw new ErrorHandler(400, 'parameter does not resemble a Uuid')
-    }
-
+  getAllBy = async ({ decoded, query }: Request) => {
     const foundUser = await userRepository.findOne({
-      id: params.userId
+      id: decoded.id
     })
 
     if (!foundUser) throw new ErrorHandler(404, 'User not found')
 
     const { comparePwd, ...user } = foundUser
 
-    const tools = await toolRepository.getAllBy({
+    let tools = await toolRepository.getAllBy({
       user
     })
+
+    if ('title' in query) {
+      tools = tools.filter(tool => {
+        return tool.title.toLocaleLowerCase() === (query!.title as string).toLocaleLowerCase()
+      })
+    }
+
+    if ('tag' in query) {
+      tools = tools.filter(tool => {
+        return tool.title.toLocaleLowerCase() === (query!.tag as string).toLocaleLowerCase()
+      })
+    }
 
     return tools.map(t => serializeToolUtils(t))
   }
