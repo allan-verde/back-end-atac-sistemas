@@ -1,5 +1,6 @@
 import { compare } from 'bcrypt'
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Tool } from './Tool'
 
 @Entity('users')
 export class User {
@@ -17,6 +18,9 @@ export class User {
 
     @Column()
       password: string
+
+    @OneToMany(() => Tool, (tool) => tool.user)
+      tools: Tool[]
 
     comparePwd = async (pwdString: string): Promise<boolean> => {
       return await compare(pwdString, this.password)

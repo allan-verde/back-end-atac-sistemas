@@ -11,7 +11,9 @@ class UserRepository {
 
   save = async (user: Partial<User>) => await this.ormRepo.save(user)
 
-  findOne = async (payload: object) => await this.ormRepo.findOneBy({ ...payload })
+  findOne = async (payload: object) => {
+    return await this.ormRepo.findOneBy({ ...payload })
+  }
 }
 
 export default new UserRepository()

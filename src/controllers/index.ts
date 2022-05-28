@@ -1,3 +1,4 @@
+import toolController from './tool.controller'
 import userController from './user.controller'
 
-export { userController }
+export { toolController, userController }
